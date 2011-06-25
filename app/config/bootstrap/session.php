@@ -17,6 +17,22 @@ Session::config(array(
 	'default' => array('adapter' => 'Php')
 ));
 
+
+
+
+//User::applyFilter('save', function($self, $params, $chain){
+//	$record = $params['entity'];
+//	if (!$record->id) {
+//		$record->password = lithium\util\String::hash($record->password);
+//	}
+//	if (!empty($params['data'])) {
+//		$record->set($params['data']);
+//	}
+//	$params['entity'] = $record;
+//	return $chain->next($self, $params, $chain);
+//});
+
+
 /**
  * Uncomment the lines below to enable forms-based authentication. This configuration will attempt
  * to authenticate users against a `Users` model. In a controller, run
@@ -35,14 +51,14 @@ Session::config(array(
  * @see lithium\action\Request::$data
  * @see lithium\security\Auth
  */
-// use lithium\security\Auth;
+ use lithium\security\Auth;
 
-// Auth::config(array(
-// 	'default' => array(
-// 		'adapter' => 'Form',
-// 		'model' => 'Users',
-// 		'fields' => array('username', 'password')
-// 	)
-// ));
+ Auth::config(array(
+	'customer' => array(
+		'adapter' => 'Form',
+		'model' => 'User',
+		'fields' => array('username', 'password')
+	)
+ ));
 
 ?>
