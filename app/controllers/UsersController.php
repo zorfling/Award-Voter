@@ -12,4 +12,9 @@ class UsersController extends \lithium\action\Controller {
 		}
 	}
 
+	public function logout() {
+		Auth::clear('customer');
+		$this->redirect('/');
+	}
+
 }

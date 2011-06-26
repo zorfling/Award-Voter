@@ -8,6 +8,7 @@
 
 use lithium\core\Libraries;
 use lithium\data\Connections;
+use lithium\security\Auth;
 
 $this->title('Home');
 
@@ -157,7 +158,6 @@ $checks = array(
 );
 
 ?>
-
 <h3>Getting Started</h3>
 <?php foreach ($checks as $check): ?>
 	<?php echo $check(); ?>

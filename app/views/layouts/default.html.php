@@ -22,6 +22,11 @@
 			<h2>
 				Powered by <?php echo $this->html->link('Lithium', 'http://lithify.me/'); ?>.
 			</h2>
+			<?php if (\lithium\security\Auth::check('customer')) { ?>
+				Logged in - <a href="/users/logout">Logout</a>
+			<?php } else { ?>
+				Logged out - <a href="/users/login">Login</a>
+			<?php } ?>
 		</div>
 		<div id="content">
 			<?php echo $this->content(); ?>
