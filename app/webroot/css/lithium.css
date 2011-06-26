@@ -91,6 +91,9 @@ dd {
 	margin-left: 1em;
 }
 /*--- Header ---*/
+#header {
+	position: relative;
+}
 #header h1 {
 	margin: .1em 0;
 	font-size: 35px;
@@ -101,6 +104,12 @@ dd {
 	color: #666;
 	font-size: 22px;
 	line-height: 28px;
+}
+
+#header p {
+	position: absolute;
+	right: 25px;
+	top: 25px;
 }
 
 /*--- Tables ---*/
