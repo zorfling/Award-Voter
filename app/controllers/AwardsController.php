@@ -10,7 +10,7 @@ class AwardsController extends \lithium\action\Controller {
 		parent::__construct($config);
 
 		if (!Auth::check('customer')) {
-			$this->redirect('/users/login/');
+			$this->redirect('Users::login');
 		}
 	}
 

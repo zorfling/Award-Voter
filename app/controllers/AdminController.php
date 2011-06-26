@@ -18,4 +18,24 @@ class AdminController extends \lithium\action\Controller {
 
 	}
 
+	public function user($function = 'list') {
+		switch ($function) {
+			case 'list':
+
+				break;
+
+			case 'add':
+
+				break;
+
+			case 'edit':
+
+				break;
+
+			case 'delete':
+
+				break;
+		}
+	}
+
 }
