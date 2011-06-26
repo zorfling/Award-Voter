@@ -58,6 +58,12 @@ User::applyFilter('save', function($self, $params, $chain){
 		'adapter' => 'Form',
 		'model' => 'User',
 		'fields' => array('username', 'password')
+	),
+	'admin'	=>	array(
+		'adapter' => 'Form',
+		'model' => 'User',
+		'fields' => array('username', 'password'),
+		'scope' => array('is_admin' => true)
 	)
  ));
 
