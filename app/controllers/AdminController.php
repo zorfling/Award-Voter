@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use \lithium\security\Auth;
+use \lithium\util\Set;
+use \app\models\User;
 
 class AdminController extends \lithium\action\Controller {
 
@@ -19,9 +21,9 @@ class AdminController extends \lithium\action\Controller {
 	}
 
 	public function user($function = 'list') {
-		switch ($function) {
+		switch (strtolower($function)) {
 			case 'list':
-
+				$data = User::all();
 				break;
 
 			case 'add':
@@ -29,7 +31,26 @@ class AdminController extends \lithium\action\Controller {
 				break;
 
 			case 'edit':
+				$data = User::find('all', array('conditions' => array('id' => 1), 'limit' => 1));
+				$user = $data->first();
 
+				$success = false;
+
+				if ($this->request->data) {
+
+					if ($this->request->data['password'] == '') {
+						$this->request->data['password'] = $user->password;
+					} else {
+						// Filter should have done this but we'll do it here for now
+						$this->request->data['password'] = \lithium\util\String::hash($this->request->data['password']);
+					}
+
+					$success = $user->save($this->request->data);
+				}
+
+				$user->password = '';
+
+				return compact('success', 'function', 'user');
 				break;
 
 			case 'delete':
@@ -37,7 +58,7 @@ class AdminController extends \lithium\action\Controller {
 				break;
 		}
 
-		return compact('function');
+		return compact('function', 'data');
 	}
 
 }

@@ -9,8 +9,13 @@ class UsersController extends \lithium\action\Controller {
 	public function login($type = 'customer') {
 
 		if (Auth::check($type, $this->request)) {
-			return $this->redirect('/');
+			if ($type == 'customer') {
+				return $this->redirect('/');
+			} else {
+				return $this->redirect('/Admin/');
+			}
 		}
+
 	}
 
 	public function logout($type = 'customer') {

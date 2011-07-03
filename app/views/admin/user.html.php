@@ -1,16 +1,16 @@
 <?php
-switch ($function) {
+switch (strtolower($function)) {
 	case 'list':
-		echo $this->partial->user_list();
+		echo $this->partial->user_list(compact('data'));
 		break;
 	case 'add':
-		echo $this->partial->user_add();
+		echo $this->partial->user_add(compact('data'));
 		break;
 	case 'edit':
-		echo $this->partial->user_edit();
+		echo $this->partial->user_edit(compact('user', 'success'));
 		break;
 	case 'delete':
-		echo $this->partial->user_delete();
+		echo $this->partial->user_delete(compact('data'));
 		break;
 }
 
