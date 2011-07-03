@@ -36,6 +36,8 @@ class AdminController extends \lithium\action\Controller {
 
 				break;
 		}
+
+		return compact('function');
 	}
 
 }
