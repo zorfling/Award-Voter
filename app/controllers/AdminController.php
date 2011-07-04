@@ -6,6 +6,8 @@ use \lithium\security\Auth;
 use \lithium\util\Set;
 use \app\models\User;
 
+use li3_flash_message\extensions\storage\FlashMessage;
+
 class AdminController extends \lithium\action\Controller {
 
 	public function __construct($config) {
@@ -46,6 +48,9 @@ class AdminController extends \lithium\action\Controller {
 					}
 
 					$success = $user->save($this->request->data);
+					if ($success) {
+						FlashMessage::write('User updated!');
+					}
 				}
 
 				$user->password = '';

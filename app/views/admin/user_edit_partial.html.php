@@ -1,5 +1,7 @@
 <h4>User edit</h4>
 
+<?=$this->flashMessage->output(); ?>
+
 <?=$this->form->create($user); ?>
 	<?=$this->form->field('id', array('type' => 'hidden'));?>
 	<?=$this->form->field('username');?>
