@@ -4,7 +4,7 @@ switch (strtolower($function)) {
 		echo $this->partial->user_list(compact('data'));
 		break;
 	case 'add':
-		echo $this->partial->user_add(compact('data'));
+		echo $this->partial->user_add(compact('user', 'success'));
 		break;
 	case 'edit':
 		echo $this->partial->user_edit(compact('user', 'success'));

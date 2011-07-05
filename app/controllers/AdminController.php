@@ -16,6 +16,7 @@ class AdminController extends \lithium\action\Controller {
 		if (!Auth::check('admin')) {
 			$this->redirect('/users/login/admin/');
 		}
+		$this->_render['layout'] = 'admin';
 	}
 
 	public function index() {
@@ -29,7 +30,14 @@ class AdminController extends \lithium\action\Controller {
 				break;
 
 			case 'add':
-
+				if ($this->request->data) {
+					$user = User::create($this->request->data);
+					$success = $user->save();
+					if ($success) {
+						FlashMessage::write('User added!');
+					}
+				}
+				return compact('user', 'function', 'success');
 				break;
 
 			case 'edit':
