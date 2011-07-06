@@ -80,5 +80,9 @@ require __DIR__ . '/bootstrap/session.php';
  */
 // require __DIR__ . '/bootstrap/console.php';
 
+/**
+ * This file contains model filters.
+ */
+require __DIR__ . '/bootstrap/filters.php';
 
 ?>

@@ -31,6 +31,8 @@
 			</p>
 		</div>
 		<div id="content">
+			<?=$this->flashMessage->output(); ?>
+			
 			<?php echo $this->content(); ?>
 		</div>
 	</div>
