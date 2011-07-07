@@ -5,6 +5,8 @@ namespace app\controllers;
 use \lithium\security\Auth;
 use \lithium\util\Set;
 use \app\models\User;
+use \app\models\Vote;
+use \app\models\Award;
 
 use li3_flash_message\extensions\storage\FlashMessage;
 
@@ -72,6 +74,23 @@ class AdminController extends \lithium\action\Controller {
 		}
 
 		return compact('function', 'data');
+	}
+
+	public function round($roundId = 1) {
+		// Get votes
+		$awards = Award::all();
+		foreach ($awards as $award) {
+			$votes[$award->award_id]['title'] = $award->name;
+			$votes[$award->award_id]['data'] = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('votee_user_id', 'count(*) as count'), 'group' => 'votee_user_id', 'order' => 'count DESC'));
+		}
+
+		$userResults = User::all();
+
+		foreach($userResults as $user) {
+			$users[$user->id] = $user->getFullName();
+		}
+
+		return compact('votes', 'users');
 	}
 
 }
