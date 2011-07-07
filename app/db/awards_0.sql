@@ -110,7 +110,8 @@ INSERT INTO `round_users` (`round_id`, `user_id`) VALUES
 (1, 15),
 (1, 16),
 (1, 17),
-(1, 18);
+(1, 18),
+(1, 19);
 
 -- --------------------------------------------------------
 
@@ -151,7 +152,8 @@ INSERT INTO `users` (`username`, `first_name`, `surname`, `email`, `password`, `
 ('sarraiol', 'Sandy', 'Arraiol', 'sandy@brightlabs.com.au', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 0),
 ('jsmadja', 'Jerome', 'Smadja', 'jerome@brightlabs.com.au', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 0),
 ('ngay', 'Nickolas', 'Gay', 'nick@brightlabs.com.au', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 0),
-('dsisodia', 'Dhruv', 'Sisodia', 'dhruv@brightlabs.com.au', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 0);
+('dsisodia', 'Dhruv', 'Sisodia', 'dhruv@brightlabs.com.au', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 0),
+('lsparkes', 'Liz', 'Sparkes', 'liz@brightlabs.com.au', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 0);
 
 -- --------------------------------------------------------
 
