@@ -4,6 +4,6 @@ namespace app\models;
 
 class Vote extends \lithium\data\Model {
 
-	protected $_meta = array('key' => 'award_id');
+	protected $_meta = array('key' => 'vote_id');
 
 }
