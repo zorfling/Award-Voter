@@ -41,7 +41,7 @@ class AdminController extends \lithium\action\Controller {
 				break;
 
 			case 'edit':
-				$data = User::find('all', array('conditions' => array('id' => 1), 'limit' => 1));
+				$data = User::find('all', array('conditions' => array('id' => (int)$this->request->params['args'][1]), 'limit' => 1));
 				$user = $data->first();
 
 				$success = false;

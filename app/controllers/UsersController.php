@@ -10,9 +10,9 @@ class UsersController extends \lithium\action\Controller {
 
 		if (Auth::check($type, $this->request)) {
 			if ($type == 'customer') {
-				return $this->redirect('/');
+				return $this->redirect('/Awards/Vote/');
 			} else {
-				return $this->redirect('/Admin/');
+				return $this->redirect('/Admin/User/');
 			}
 		}
 
