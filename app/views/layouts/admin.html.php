@@ -10,7 +10,7 @@
 <html>
 <head>
 	<?php echo $this->html->charset();?>
-	<title>Application > <?php echo $this->title(); ?></title>
+	<title>Awards Voter Admin</title>
 	<?php echo $this->html->style(array('debug', 'lithium')); ?>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
@@ -18,15 +18,15 @@
 <body class="app">
 	<div id="container">
 		<div id="header">
-			<h1>Application</h1>
+			<h1>Awards Voter Admin</h1>
 			<h2>
 				Powered by <?php echo $this->html->link('Lithium', 'http://lithify.me/'); ?>.
 			</h2>
 			<p>
 			<?php if (\lithium\security\Auth::check('admin')) { ?>
-				Logged in - <a href="/users/logout/admin/">Logout</a>
+				Logged in - <a href="/Users/Logout/">Logout</a>
 			<?php } else { ?>
-				Logged out - <a href="/users/login/admin/">Login</a>
+				Logged out - <a href="/Users/Login/">Login</a>
 			<?php } ?>
 			</p>
 		</div>

@@ -305,6 +305,7 @@ input[type=checkbox], input[type=radio] {
 	margin-right: 5px;	
 }
 .award-row {
+	margin-bottom: 10px;
 	overflow: hidden;
 }
 
@@ -316,7 +317,7 @@ input[type=checkbox], input[type=radio] {
 .flash-message {
 	background: #ddf;
 	margin-bottom: 18px;
-	padding: 5px;
+	padding: 5px 10px;
 
 	background: #b1e2ef; /* Old browsers */
 	background: -moz-linear-gradient(top, #b1e2ef 0%, #819fc4 100%); /* FF3.6+ */

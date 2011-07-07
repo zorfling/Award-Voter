@@ -6,20 +6,19 @@ use lithium\security\Auth;
 
 class UsersController extends \lithium\action\Controller {
 
-	public function login($type = 'customer') {
+	public function login() {
 
-		if (Auth::check($type, $this->request)) {
-			if ($type == 'customer') {
-				return $this->redirect('/Awards/Vote/');
-			} else {
-				return $this->redirect('/Admin/User/');
-			}
+		if (Auth::check('customer', $this->request)) {
+			return $this->redirect('Awards::vote');
+		} else if (Auth::check('admin', $this->request)) {
+			return $this->redirect('Admin::round');
 		}
 
 	}
 
-	public function logout($type = 'customer') {
-		Auth::clear($type);
+	public function logout() {
+		Auth::clear('customer');
+		Auth::clear('admin');
 		$this->redirect('/');
 	}
 

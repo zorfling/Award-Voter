@@ -24,9 +24,9 @@
 			</h2>
 			<p>
 			<?php if (\lithium\security\Auth::check('customer')) { ?>
-				Logged in - <a href="/users/logout">Logout</a>
+				Logged in - <a href="/Users/Logout/">Logout</a>
 			<?php } else { ?>
-				Logged out - <a href="/users/login">Login</a>
+				Logged out - <a href="/Users/Login/">Login</a>
 			<?php } ?>
 			</p>
 		</div>

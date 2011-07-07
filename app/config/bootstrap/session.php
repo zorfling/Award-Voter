@@ -42,7 +42,8 @@ Session::config(array(
 	'customer' => array(
 		'adapter' => 'Form',
 		'model' => 'User',
-		'fields' => array('username', 'password')
+		'fields' => array('username', 'password'),
+		'scope' => array('is_admin' => false)
 	),
 	'admin'	=>	array(
 		'adapter' => 'Form',
