@@ -7,6 +7,8 @@ use \lithium\util\Set;
 use \app\models\User;
 use \app\models\Vote;
 use \app\models\Award;
+use \app\models\Round;
+use \app\models\RoundUser;
 
 use li3_flash_message\extensions\storage\FlashMessage;
 
@@ -18,6 +20,7 @@ class AdminController extends \lithium\action\Controller {
 		if (!Auth::check('admin')) {
 			$this->redirect('/users/login/admin/');
 		}
+
 		$this->_render['layout'] = 'admin';
 	}
 
@@ -77,20 +80,50 @@ class AdminController extends \lithium\action\Controller {
 	}
 
 	public function round($roundId = 1) {
+		// Get round
+		$round = Round::all(array('conditions' => array('round_id' => $roundId)));
+		$round = $round->First();
+
+		// Users
+		$usersAll = User::all();
+
+		foreach($usersAll as $user) {
+			$users[$user->id] = $user;
+		}
+
+		// Round Users
+		$roundUsers = RoundUser::all();
+
+		foreach ($roundUsers as $user) {
+			$roundUserArray[$user->user_id]	= $user->weight;
+		}
+
 		// Get votes
 		$awards = Award::all();
 		foreach ($awards as $award) {
 			$votes[$award->award_id]['title'] = $award->name;
-			$votes[$award->award_id]['data'] = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('votee_user_id', 'count(*) as count'), 'group' => 'votee_user_id', 'order' => 'count DESC'));
+			$votesData = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('voter_user_id', 'votee_user_id')));
+
+			foreach($votesData as $vote) {
+				if (!isset($votesArray[$vote->votee_user_id]['votes'])) {
+					$votesArray[$vote->votee_user_id]['votes'] = 1;
+				} else {
+					$votesArray[$vote->votee_user_id]['votes']++;
+				}
+
+				if (!isset($votesArray[$vote->votee_user_id]['weightedVotes'])) {
+					$votesArray[$vote->votee_user_id]['weightedVotes'] = 1 * $roundUserArray[$vote->voter_user_id];
+				} else {
+					$votesArray[$vote->votee_user_id]['weightedVotes'] += (1 * $roundUserArray[$vote->voter_user_id]);
+				}
+			}
+
+			
+
+			$votes[$award->award_id]['data'] = $votesArray;
 		}
 
-		$userResults = User::all();
-
-		foreach($userResults as $user) {
-			$users[$user->id] = $user->getFullName();
-		}
-
-		return compact('votes', 'users');
+		return compact('votes', 'users', 'round');
 	}
 
 }

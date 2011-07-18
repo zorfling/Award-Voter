@@ -302,7 +302,7 @@ input, textarea {
 	box-shadow: inset 0 0 3px rgba(0,0,0,.1);
 }
 input[type=checkbox], input[type=radio] {
-	margin-right: 5px;	
+	margin-right: 5px;
 }
 .award-row {
 	margin-bottom: 10px;
@@ -333,3 +333,28 @@ input[type=checkbox], input[type=radio] {
 	border-radius: 3px;
 }
 
+/* tables */
+table.table-votes thead tr .header {
+	background-image: url(/img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.table-votes tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.table-votes tbody tr.odd td {
+	background-color:#F0F0F6;
+}
+table.table-votes thead tr .headerSortUp {
+	background-image: url(/img/asc.gif);
+}
+table.table-votes thead tr .headerSortDown {
+	background-image: url(/img/desc.gif);
+}
+table.table-votes thead tr .headerSortDown, table.table-votes thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
