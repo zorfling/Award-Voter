@@ -79,51 +79,95 @@ class AdminController extends \lithium\action\Controller {
 		return compact('function', 'data');
 	}
 
-	public function round($roundId = 1) {
-		// Get round
-		$round = Round::all(array('conditions' => array('round_id' => $roundId)));
-		$round = $round->First();
+	public function round($function = 'list', $roundId = 1) {
+		switch (strtolower($function)) {
+			default:
+			case 'list':
+				$rounds = Round::all();
+				return compact('function', 'rounds');
+				break;
 
-		// Users
-		$usersAll = User::all();
+			case 'add':
+				if ($this->request->data) {
+					$round = Round::create($this->request->data);
+					$success = $round->save();
+					if ($success) {
+						FlashMessage::write('Round added!');
+					}
+				}
+				return compact('round', 'function', 'success');
+				break;
 
-		foreach($usersAll as $user) {
-			$users[$user->id] = $user;
-		}
+			case 'edit':
+				$data = Round::find('all', array('conditions' => array('round_id' => (int)$this->request->params['args'][1]), 'limit' => 1));
+				$round = $data->first();
 
-		// Round Users
-		$roundUsers = RoundUser::all();
+				$success = false;
 
-		foreach ($roundUsers as $user) {
-			$roundUserArray[$user->user_id]	= $user->weight;
-		}
+				if ($this->request->data) {
 
-		// Get votes
-		$awards = Award::all();
-		foreach ($awards as $award) {
-			$votes[$award->award_id]['title'] = $award->name;
-			$votesData = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('voter_user_id', 'votee_user_id')));
-
-			foreach($votesData as $vote) {
-				if (!isset($votesArray[$vote->votee_user_id]['votes'])) {
-					$votesArray[$vote->votee_user_id]['votes'] = 1;
-				} else {
-					$votesArray[$vote->votee_user_id]['votes']++;
+					$success = $round->save($this->request->data);
+					if ($success) {
+						FlashMessage::write('Round updated!');
+					}
 				}
 
-				if (!isset($votesArray[$vote->votee_user_id]['weightedVotes'])) {
-					$votesArray[$vote->votee_user_id]['weightedVotes'] = 1 * $roundUserArray[$vote->voter_user_id];
-				} else {
-					$votesArray[$vote->votee_user_id]['weightedVotes'] += (1 * $roundUserArray[$vote->voter_user_id]);
+				$round->password = '';
+
+				return compact('success', 'function', 'round');
+				break;
+
+			case 'delete':
+				return compact('function');
+				break;
+
+			case 'results':
+				// Get round
+				$round = Round::all(array('conditions' => array('round_id' => $roundId)));
+				$round = $round->First();
+
+				// Users
+				$usersAll = User::all();
+
+				foreach($usersAll as $user) {
+					$users[$user->id] = $user;
 				}
-			}
 
-			
+				// Round Users
+				$roundUsers = RoundUser::all();
 
-			$votes[$award->award_id]['data'] = $votesArray;
+				foreach ($roundUsers as $user) {
+					$roundUserArray[$user->user_id]	= $user->weight;
+				}
+
+				// Get votes
+				$awards = Award::all();
+				foreach ($awards as $award) {
+					$votes[$award->award_id]['title'] = $award->name;
+					$votesData = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('voter_user_id', 'votee_user_id')));
+
+					foreach($votesData as $vote) {
+						if (!isset($votesArray[$vote->votee_user_id]['votes'])) {
+							$votesArray[$vote->votee_user_id]['votes'] = 1;
+						} else {
+							$votesArray[$vote->votee_user_id]['votes']++;
+						}
+
+						if (!isset($votesArray[$vote->votee_user_id]['weightedVotes'])) {
+							$votesArray[$vote->votee_user_id]['weightedVotes'] = 1 * $roundUserArray[$vote->voter_user_id];
+						} else {
+							$votesArray[$vote->votee_user_id]['weightedVotes'] += (1 * $roundUserArray[$vote->voter_user_id]);
+						}
+					}
+
+
+
+					$votes[$award->award_id]['data'] = $votesArray;
+				}
+
+				return compact('function', 'votes', 'users', 'round');
+				break;
 		}
-
-		return compact('votes', 'users', 'round');
 	}
 
 }

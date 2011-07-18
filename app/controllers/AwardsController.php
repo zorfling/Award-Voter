@@ -37,8 +37,9 @@ class AwardsController extends \lithium\action\Controller {
 		$success = false;
 
 		// Determine current round
-		//$round = Round::find('all', array('conditions' => array('round_id' => 1)));
 		$roundId = self::ROUND;
+		$round = Round::find('all', array('conditions' => array('round_id' => $roundId)));
+		$round = $round->First();
 
 
 		if ($this->request->data) {
@@ -92,7 +93,7 @@ class AwardsController extends \lithium\action\Controller {
 		$users = User::all(array('conditions' => array('is_admin' => 0, 'id' => $userIds), 'order' => array('surname', 'first_name')));
 		$awards = Award::all();
 
-		return compact('users', 'awards');
+		return compact('users', 'awards', 'round');
 
 
 	}

@@ -1,3 +1,7 @@
+<p>
+	Voting for Round <?= $round->round_id; ?><br />
+	Ending <?= date('d-m-Y', strtotime($round->round_date)); ?>
+</p>
 <?= $this->form->create(); ?>
 <div class="award-row">
 <?php foreach ($awards as $award) { ?>
