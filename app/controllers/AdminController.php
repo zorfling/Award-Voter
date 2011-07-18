@@ -94,6 +94,7 @@ class AdminController extends \lithium\action\Controller {
 					if ($success) {
 						FlashMessage::write('Round added!');
 					}
+					$this->redirect('/admin/round/');
 				}
 				return compact('round', 'function', 'success');
 				break;
@@ -110,6 +111,7 @@ class AdminController extends \lithium\action\Controller {
 					if ($success) {
 						FlashMessage::write('Round updated!');
 					}
+					$this->redirect('/admin/round/');
 				}
 
 				$round->password = '';
@@ -118,7 +120,11 @@ class AdminController extends \lithium\action\Controller {
 				break;
 
 			case 'delete':
-				return compact('function');
+				$round = Round::find('all', array('conditions' => array('round_id' => (int)$this->request->params['args'][1]), 'limit' => 1));
+				$round->first()->delete();
+
+				FlashMessage::write('Round deleted!');
+				$this->redirect('/admin/round/');
 				break;
 
 			case 'results':
