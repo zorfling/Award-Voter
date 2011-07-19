@@ -149,6 +149,7 @@ class AdminController extends \lithium\action\Controller {
 				// Get votes
 				$awards = Award::all();
 				foreach ($awards as $award) {
+					$votesArray = array();
 					$votes[$award->award_id]['title'] = $award->name;
 					$votesData = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('voter_user_id', 'votee_user_id')));
 
@@ -165,8 +166,6 @@ class AdminController extends \lithium\action\Controller {
 							$votesArray[$vote->votee_user_id]['weightedVotes'] += (1 * $roundUserArray[$vote->voter_user_id]);
 						}
 					}
-
-
 
 					$votes[$award->award_id]['data'] = $votesArray;
 				}
