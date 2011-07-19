@@ -18,7 +18,7 @@ class AdminController extends \lithium\action\Controller {
 		parent::__construct($config);
 
 		if (!Auth::check('admin')) {
-			$this->redirect('/users/login/admin/');
+			$this->redirect('/users/login/');
 		}
 
 		$this->_render['layout'] = 'admin';
