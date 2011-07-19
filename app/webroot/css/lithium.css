@@ -221,6 +221,19 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 	outline: none;
 }
 
+.form-row {
+	overflow: hidden;
+}
+
+.form-row > div {
+	float: left;
+}
+
+.form-row > div:first-child {
+	width: 200px;
+}
+
+
 /*--- Misc ---*/
 hr {
 	border: none;

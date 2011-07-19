@@ -7,10 +7,10 @@ switch (strtolower($function)) {
 		echo $this->partial->round_results(compact('votes', 'users', 'round'));
 		break;
 	case 'add':
-		echo $this->partial->round_add(compact('round', 'success'));
+		echo $this->partial->round_add(compact('round', 'success', 'users'));
 		break;
 	case 'edit':
-		echo $this->partial->round_edit(compact('round', 'success'));
+		echo $this->partial->round_edit(compact('round', 'success', 'users', 'roundUsers'));
 		break;
 	case 'delete':
 		echo $this->partial->round_delete(compact('data'));

@@ -88,26 +88,75 @@ class AdminController extends \lithium\action\Controller {
 				break;
 
 			case 'add':
+				// Get users
+				$users = User::all(array('conditions' => array('is_admin' => false)));
+
+				$success = false;
 				if ($this->request->data) {
 					$round = Round::create($this->request->data);
 					$success = $round->save();
+
+					// TODO: This isn't working - I'll need to work this one out
+					$roundId = $round->round_id;
+
+					// Clear round users
+					RoundUser::remove(array('round_id' => $roundId));
+
+					// Add round users
+					foreach ($this->request->data['round_users'] as $roundUser) {
+						if (is_numeric($roundUser)) {
+							$roundUserData['round_id'] = $roundId;
+							$roundUserData['user_id'] = $roundUser;
+							$roundUserData['weight'] = $this->request->data['round_user_weight_'.$roundUser];
+							$newRoundUser = RoundUser::create($roundUserData);
+							$success = $success && $newRoundUser->save();
+						}
+					}
+
 					if ($success) {
 						FlashMessage::write('Round added!');
 					}
 					$this->redirect('/admin/round/');
 				}
-				return compact('round', 'function', 'success');
+				return compact('round', 'function', 'success', 'users');
 				break;
 
 			case 'edit':
-				$data = Round::find('all', array('conditions' => array('round_id' => (int)$this->request->params['args'][1]), 'limit' => 1));
+				$roundId = (int)$this->request->params['args'][1];
+
+				$data = Round::find('all', array('conditions' => array('round_id' => $roundId), 'limit' => 1));
 				$round = $data->first();
+
+				// Get users
+				$users = User::all(array('conditions' => array('is_admin' => false)));
+				$roundUsersRS = RoundUser::all(array('conditions' => array('round_id' => $roundId)));
+
+				// Get round users into the correct format
+				$roundUsers = array();
+				foreach ($roundUsersRS as $roundUser) {
+					$roundUsers[$roundUser->user_id] = $roundUser->weight;
+				}
 
 				$success = false;
 
 				if ($this->request->data) {
 
 					$success = $round->save($this->request->data);
+
+					// Clear round users
+					RoundUser::remove(array('round_id' => $roundId));
+
+					// Add round users
+					foreach ($this->request->data['round_users'] as $roundUser) {
+						if (is_numeric($roundUser)) {
+							$roundUserData['round_id'] = $roundId;
+							$roundUserData['user_id'] = $roundUser;
+							$roundUserData['weight'] = $this->request->data['round_user_weight_'.$roundUser];
+							$newRoundUser = RoundUser::create($roundUserData);
+							$success = $success && $newRoundUser->save();
+						}
+					}
+
 					if ($success) {
 						FlashMessage::write('Round updated!');
 					}
@@ -116,7 +165,7 @@ class AdminController extends \lithium\action\Controller {
 
 				$round->password = '';
 
-				return compact('success', 'function', 'round');
+				return compact('success', 'function', 'round', 'users', 'roundUsers');
 				break;
 
 			case 'delete':
