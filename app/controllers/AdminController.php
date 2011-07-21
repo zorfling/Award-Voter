@@ -236,9 +236,11 @@ class AdminController extends \lithium\action\Controller {
 				$roundUsers = RoundUser::all(array('conditions' => array('round_id' => $roundId)));
 
 				foreach ($roundUsers as $user) {
-					$roundUserArray[$user->user_id]	= $user->weight;
+					$roundUserArray[$user->user_id]	= $user;
 				}
 
+				$hasVoted = array();
+				
 				// Get votes
 				$awards = Award::all();
 				foreach ($awards as $award) {
@@ -247,6 +249,8 @@ class AdminController extends \lithium\action\Controller {
 					$votesData = Vote::all(array('conditions' => array('round_id' => $roundId, 'award_id' => $award->award_id), 'fields' => array('voter_user_id', 'votee_user_id')));
 
 					foreach($votesData as $vote) {
+						$hasVoted[$vote->voter_user_id] = 1;
+						
 						if (!isset($votesArray[$vote->votee_user_id]['votes'])) {
 							$votesArray[$vote->votee_user_id]['votes'] = 1;
 						} else {
@@ -254,16 +258,25 @@ class AdminController extends \lithium\action\Controller {
 						}
 
 						if (!isset($votesArray[$vote->votee_user_id]['weightedVotes'])) {
-							$votesArray[$vote->votee_user_id]['weightedVotes'] = 1 * $roundUserArray[$vote->voter_user_id];
+							$votesArray[$vote->votee_user_id]['weightedVotes'] = 1 * $roundUserArray[$vote->voter_user_id]->weight;
 						} else {
-							$votesArray[$vote->votee_user_id]['weightedVotes'] += (1 * $roundUserArray[$vote->voter_user_id]);
+							$votesArray[$vote->votee_user_id]['weightedVotes'] += (1 * $roundUserArray[$vote->voter_user_id]->weight);
 						}
 					}
 
 					$votes[$award->award_id]['data'] = $votesArray;
 				}
+				
+				$stillToVoteArray = array();
+				foreach ($roundUsers as $roundUser) {
+					if (!isset($hasVoted[$roundUser->user_id])) {
+						$stillToVoteArray[] = $users[$roundUser->user_id]->getFullName();
+					}		
+				}
+				
+				$stillToVote = implode(', ', $stillToVoteArray);
 
-				return compact('function', 'votes', 'users', 'round');
+				return compact('function', 'votes', 'users', 'round', 'stillToVote');
 				break;
 		}
 	}

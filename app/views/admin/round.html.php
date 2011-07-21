@@ -4,7 +4,7 @@ switch (strtolower($function)) {
 		echo $this->partial->round_list(compact('rounds'));
 		break;
 	case 'results':
-		echo $this->partial->round_results(compact('votes', 'users', 'round'));
+		echo $this->partial->round_results(compact('votes', 'users', 'round', 'stillToVote'));
 		break;
 	case 'add':
 		echo $this->partial->round_add(compact('round', 'success', 'users'));

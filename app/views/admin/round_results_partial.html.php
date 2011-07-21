@@ -9,7 +9,8 @@ $(document).ready(function()
 </script>
 <p>
 	Round <?= $round->round_id; ?><br />
-	Ending <?= date('d-m-Y', strtotime($round->round_date)); ?>
+	Ending <?= date('d-m-Y', strtotime($round->round_date)); ?><br /><br />
+	Still to vote: <br /><?= $stillToVote; ?>
 </p>
 <?php foreach ($votes as $awardId => $award) { ?>
 	<h4><?= $award['title']; ?></h4>
