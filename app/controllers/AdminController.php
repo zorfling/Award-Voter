@@ -233,7 +233,7 @@ class AdminController extends \lithium\action\Controller {
 				}
 
 				// Round Users
-				$roundUsers = RoundUser::all();
+				$roundUsers = RoundUser::all(array('conditions' => array('round_id' => $roundId)));
 
 				foreach ($roundUsers as $user) {
 					$roundUserArray[$user->user_id]	= $user->weight;
