@@ -22,17 +22,22 @@
 			<h2>
 				Powered by <?php echo $this->html->link('Lithium', 'http://lithify.me/'); ?>.
 			</h2>
-			<p>
+			<div id="menu-bar">
+
+				<ul id="menu">
+					<li><?= $this->html->link('Rounds', 'admin::round'); ?></li>
+					<li><?= $this->html->link('Users', 'admin::user'); ?></li>
+				</ul>
 			<?php if (\lithium\security\Auth::check('admin')) { ?>
 				Logged in - <a href="/users/logout/">Logout</a>
 			<?php } else { ?>
 				Logged out - <a href="/users/login/">Login</a>
 			<?php } ?>
-			</p>
+			</div>
 		</div>
 		<div id="content">
 			<?=$this->flashMessage->output(); ?>
-			
+
 			<?php echo $this->content(); ?>
 		</div>
 	</div>

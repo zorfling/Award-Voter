@@ -22,7 +22,7 @@ class AwardsController extends \lithium\action\Controller {
 		parent::__construct($config);
 		$result = Auth::check('customer');
 		if (!$result) {
-			$this->redirect('Users::login');
+			$this->redirect('users::login');
 		}
 
 		$this->_user = $result;
@@ -33,13 +33,13 @@ class AwardsController extends \lithium\action\Controller {
 
 	}
 
-	public function vote() {
+	public function vote($roundId = null) {
 		$success = false;
 
 		// Determine current round
-		$roundId = self::ROUND;
+		if (!$roundId) $roundId = self::ROUND;
 		$round = Round::find('all', array('conditions' => array('round_id' => $roundId)));
-		$round = $round->First();
+		$round = $round->first();
 
 
 		if ($this->request->data) {

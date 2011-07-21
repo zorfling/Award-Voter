@@ -40,8 +40,8 @@ strong { font-weight: bold; }
 em { font-style: italic; }
 a { text-decoration: none; color: #666; }
 a, h1 a, h2 a { text-decoration: none; }
-a:hover { color: #00bbff; }
-a:visited:hover { color: #ff59ff; }
+a:hover { color: #000; }
+a:visited:hover { color: #000; }
 a img { border: none; }
 
 /*--- Code ---*/
@@ -106,10 +106,21 @@ dd {
 	line-height: 28px;
 }
 
-#header p {
+#menu-bar {
 	position: absolute;
 	right: 25px;
+	text-align: right;
 	top: 25px;
+}
+
+#menu {
+	overflow: hidden;
+}
+
+#menu > li {
+	float: left;
+	list-style: none;
+	margin-left: 10px;
 }
 
 /*--- Tables ---*/
@@ -369,5 +380,6 @@ table.table-votes thead tr .headerSortDown {
 	background-image: url(/img/desc.gif);
 }
 table.table-votes thead tr .headerSortDown, table.table-votes thead tr .headerSortUp {
-background-color: #8dbdd8;
+	background-color: #8dbdd8;
 }
+

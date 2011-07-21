@@ -13,7 +13,10 @@ switch (strtolower($function)) {
 		echo $this->partial->round_edit(compact('round', 'success', 'users', 'roundUsers'));
 		break;
 	case 'delete':
-		echo $this->partial->round_delete(compact('data'));
+		echo $this->partial->round_delete(compact('roundId'));
+		break;
+	case 'clear':
+		echo $this->partial->round_clear(compact('roundId'));
 		break;
 }
 

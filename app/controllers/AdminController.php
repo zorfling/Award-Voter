@@ -36,6 +36,8 @@ class AdminController extends \lithium\action\Controller {
 
 			case 'add':
 				if ($this->request->data) {
+					// Filter should have done this but we'll do it here for now
+					$this->request->data['password'] = \lithium\util\String::hash($this->request->data['password']);
 					$user = User::create($this->request->data);
 					$success = $user->save();
 					if ($success) {
@@ -96,8 +98,7 @@ class AdminController extends \lithium\action\Controller {
 					$round = Round::create($this->request->data);
 					$success = $round->save();
 
-					// TODO: This isn't working - I'll need to work this one out
-					$roundId = $round->round_id;
+					$roundId = mysql_insert_id(Round::db());
 
 					// Clear round users
 					RoundUser::remove(array('round_id' => $roundId));
@@ -169,11 +170,54 @@ class AdminController extends \lithium\action\Controller {
 				break;
 
 			case 'delete':
-				$round = Round::find('all', array('conditions' => array('round_id' => (int)$this->request->params['args'][1]), 'limit' => 1));
-				$round->first()->delete();
+				$roundId = (int)$this->request->params['args'][1];
 
-				FlashMessage::write('Round deleted!');
-				$this->redirect('/admin/round/');
+				if ($this->request->data) {
+					if ($this->request->data['round_id']) {
+						$round = Round::find('all', array('conditions' => array('round_id' => (int)$this->request->data['round_id']), 'limit' => 1));
+						$round->first()->delete();
+
+						$votes = Vote::find('all', array('conditions' => array('round_id' => (int)$this->request->data['round_id'])));
+						foreach($votes as $vote) {
+							$vote->delete();
+						}
+
+						$users = RoundUser::find('all', array('conditions' => array('round_id' => (int)$this->request->data['round_id'])));
+						foreach($users as $user) {
+							$user->delete();
+						}
+
+						FlashMessage::write('Round deleted!');
+						$this->redirect('/admin/round/');
+					} else {
+						FlashMessage::write('Check the box to delete the round');
+					}
+				}
+
+				return compact('function', 'roundId');
+
+				break;
+
+			case 'clear':
+				$roundId = (int)$this->request->params['args'][1];
+
+				if ($this->request->data) {
+					if ($this->request->data['round_id']) {
+						$votes = Vote::find('all', array('conditions' => array('round_id' => (int)$this->request->data['round_id'])));
+
+						foreach($votes as $vote) {
+							$vote->delete();
+						}
+
+						FlashMessage::write('Round votes cleared!');
+						$this->redirect('/admin/round/');
+					} else {
+						FlashMessage::write('Check the box to clear the round');
+					}
+				}
+
+				return compact('function', 'roundId');
+
 				break;
 
 			case 'results':
