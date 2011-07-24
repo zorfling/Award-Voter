@@ -16,8 +16,6 @@ class AwardsController extends \lithium\action\Controller {
 
 	protected $_user = array();
 
-	const ROUND = 1;
-
 	public function __construct($config) {
 		parent::__construct($config);
 		$result = Auth::check('customer');
@@ -37,10 +35,8 @@ class AwardsController extends \lithium\action\Controller {
 		$success = false;
 
 		// Determine current round
-		if (!$roundId) $roundId = self::ROUND;
-		$round = Round::find('all', array('conditions' => array('round_id' => $roundId)));
-		$round = $round->first();
-
+		$round = Round::find('first', array('conditions' => array('round_status' => Round::STATUS_ACTIVE, 'round_date' => array(">=" => date('Y-m-d 00:00:00')))));
+		if (!$roundId) $roundId = $round->round_id;
 
 		if ($this->request->data) {
 			foreach($this->request->data as $key => $value) {

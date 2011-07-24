@@ -141,7 +141,6 @@ class AdminController extends \lithium\action\Controller {
 				$success = false;
 
 				if ($this->request->data) {
-
 					$success = $round->save($this->request->data);
 
 					// Clear round users
@@ -240,7 +239,7 @@ class AdminController extends \lithium\action\Controller {
 				}
 
 				$hasVoted = array();
-				
+
 				// Get votes
 				$awards = Award::all();
 				foreach ($awards as $award) {
@@ -250,7 +249,7 @@ class AdminController extends \lithium\action\Controller {
 
 					foreach($votesData as $vote) {
 						$hasVoted[$vote->voter_user_id] = 1;
-						
+
 						if (!isset($votesArray[$vote->votee_user_id]['votes'])) {
 							$votesArray[$vote->votee_user_id]['votes'] = 1;
 						} else {
@@ -266,14 +265,14 @@ class AdminController extends \lithium\action\Controller {
 
 					$votes[$award->award_id]['data'] = $votesArray;
 				}
-				
+
 				$stillToVoteArray = array();
 				foreach ($roundUsers as $roundUser) {
 					if (!isset($hasVoted[$roundUser->user_id])) {
 						$stillToVoteArray[] = $users[$roundUser->user_id]->getFullName();
-					}		
+					}
 				}
-				
+
 				$stillToVote = implode(', ', $stillToVoteArray);
 
 				return compact('function', 'votes', 'users', 'round', 'stillToVote');
