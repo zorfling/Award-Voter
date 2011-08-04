@@ -56,6 +56,11 @@ class AwardsController extends \lithium\action\Controller {
 					FlashMessage::write("You've already voted for this round!");
 					break;
 				}
+				
+				if ($voterId == $voteeId) {
+					FlashMessage::write("You cannot vote for yourself!");
+					break;						
+				}
 
 
 				$vote = Vote::create();
