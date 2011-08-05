@@ -91,7 +91,7 @@ class AwardsController extends \lithium\action\Controller {
 			}
 		}
 
-		$users = User::all(array('conditions' => array('is_admin' => 0, 'id' => $userIds), 'order' => array('surname', 'first_name')));
+		$users = User::all(array('conditions' => array('is_admin' => 0, 'id' => $userIds), 'order' => array('first_name', 'surname')));
 		$awards = Award::all();
 
 		return compact('users', 'awards', 'round');
