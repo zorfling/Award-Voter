@@ -7,9 +7,9 @@
 		<?=$this->form->field('round_users[]', array(	'type' => 'checkbox',
 														'value' => $user->id,
 														'label' => $user->getFullName(),
-														'checked' => (isset($roundUsers[$user->id])),
+														'checked' => (isset($roundUsers[$user->id]) || empty($roundUsers)),
 														'id' => 'round_users_'.$user->id
 													));?>
-		<?=$this->form->field('round_user_weight_'.$user->id, array('label' => 'Weight', 'value' => (isset($roundUsers[$user->id]) ? $roundUsers[$user->id] : '' )));?>
+		<?=$this->form->field('round_user_weight_'.$user->id, array('label' => 'Weight', 'value' => (isset($roundUsers[$user->id]) ? $roundUsers[$user->id] : (empty($roundUsers)?'1':'') )));?>
 	</div>
 <?php } ?>
