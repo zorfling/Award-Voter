@@ -39,7 +39,7 @@ Session::config(array(
  use lithium\security\Auth;
 
  Auth::config(array(
-	'customer' => array(
+	'frontend' => array(
 		'adapter' => 'Form',
 		'model' => 'User',
 		'fields' => array('username', 'password'),

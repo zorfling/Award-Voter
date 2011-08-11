@@ -25,14 +25,14 @@
 			<div id="menu-bar">
 
 
-				<?php if (\lithium\security\Auth::check('customer')) { ?>
+				<?php if (\lithium\security\Auth::check('frontend')) { ?>
 				<ul id="menu">
 					<li><?= $this->html->link('Vote', 'awards::vote'); ?></li>
 					<li><?= $this->html->link('Update Password', 'users::password'); ?></li>
 				</ul>
 				<?php } ?>
 
-				<?php if (\lithium\security\Auth::check('customer')) { ?>
+				<?php if (\lithium\security\Auth::check('frontend')) { ?>
 					Logged in - <a href="/users/logout/">Logout</a>
 				<?php } else { ?>
 					Logged out - <a href="/users/login/">Login</a>

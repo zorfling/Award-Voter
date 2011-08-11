@@ -18,7 +18,7 @@ class AwardsController extends \lithium\action\Controller {
 
 	public function __construct($config) {
 		parent::__construct($config);
-		$result = Auth::check('customer');
+		$result = Auth::check('frontend');
 		if (!$result) {
 			$this->redirect('users::login');
 		}
