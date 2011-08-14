@@ -5,6 +5,7 @@
 		<tr>
 			<th>Round Id</th>
 			<th>Round Date</th>
+			<th>Round Status</th>
 			<th></th>
 			<th></th>
 			<th></th>
@@ -15,6 +16,7 @@
 	<tr>
 		<td><?= $round->round_id ?></td>
 		<td><?= date('d-m-Y', strtotime($round->round_date))?></td>
+		<td><?= app\models\Round::getStatusText($round->round_status) ?></td>
 		<td><?= $this->html->link('Edit', '/admin/round/edit/'.$round->round_id.'/') ?></td>
 		<td><?= $this->html->link('Results', '/admin/round/results/'.$round->round_id.'/') ?></td>
 		<td><?= $this->html->link('Clear Votes', '/admin/round/clear/'.$round->round_id.'/') ?></td>

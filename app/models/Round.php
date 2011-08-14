@@ -13,4 +13,20 @@ class Round extends \lithium\data\Model {
 	public static function db() {
 		return static::_connection()->connection;
 	}
+	
+	public static function getStatusText($statusId) {
+		switch($statusId) {
+			default:
+			case self::STATUS_PENDING:
+				$status = 'Pending';
+				break;
+			case self::STATUS_ACTIVE:
+				$status = 'Active';
+				break;
+			case self::STATUS_CLOSED:
+				$status = 'Closed';
+				break;
+		}
+		return $status;
+	}
 }
