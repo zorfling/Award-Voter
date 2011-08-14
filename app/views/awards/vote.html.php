@@ -1,3 +1,9 @@
+<?php if ($round == null) { ?>
+
+<p>There are currently no rounds available to vote on.</p>
+
+<?php } else { ?>
+
 <p>
 	Voting for Round <?= $round->round_id; ?><br />
 	Ending <?= date('d-m-Y', strtotime($round->round_date)); ?>
@@ -19,3 +25,5 @@
 </div>
 <?= $this->form->submit('Vote'); ?>
 <?= $this->form->end(); ?>
+
+<?php } ?>
