@@ -24,7 +24,7 @@ $(document).ready(function()
 		</thead>
 		<?php foreach ($award['data'] as $votee_user_id => $vote) { ?>
 		<tr>
-			<td><?= $users[$votee_user_id]->getFullName(); ?></td>
+			<td><?= $this->html->link($users[$votee_user_id]->getFullName(), '/admin/round/comments/'.$round->round_id.'/'.$votee_user_id.'/'); ?></td>
 			<td><?= $vote['votes']; ?></td>
 			<td><?= $vote['weightedVotes']; ?></td>
 		</tr>

@@ -18,5 +18,8 @@ switch (strtolower($function)) {
 	case 'clear':
 		echo $this->partial->round_clear(compact('roundId'));
 		break;
+	case 'comments':
+		echo $this->partial->round_comments(compact('roundId', 'user', 'votes'));
+		break;
 }
 

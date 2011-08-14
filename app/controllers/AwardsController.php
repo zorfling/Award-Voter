@@ -43,40 +43,46 @@ class AwardsController extends \lithium\action\Controller {
 
 			if ($this->request->data) {
 				foreach($this->request->data as $key => $value) {
-					$awardId = substr($key, strpos($key, '_')+1);
-					$voteeId = $value;
-					$voterId = $this->_user['id'];
-		
-					// Check if this user has voted
-					$result = Vote::count(array(
-						'conditions' => array(
-							'round_id' => $roundId,
-							'award_id' => $awardId,
-							'voter_user_id' => $voterId
-						)));
-					if ($result > 0) {
-						FlashMessage::write("You've already voted for this round!");
-						break;
-					}
-					
-					if ($voterId == $voteeId) {
-						FlashMessage::write("You cannot vote for yourself!");
-						break;						
-					}
-		
-		
-					$vote = Vote::create();
-		
-					$vote->round_id = $roundId;
-					$vote->award_id = $awardId;
-					$vote->voter_user_id = $voterId;
-					$vote->votee_user_id = $voteeId;
-		
-					$success = $vote->save();
-		
-					if (!$success) {
-						FlashMessage::write('Error occurred whilst voting. Please try again.');
-						continue;
+					// Make sure it's actually the vote
+					if (strpos($key, 'award') !== false) {
+						
+						$awardId = substr($key, strpos($key, '_')+1);
+						$voteeId = $value;
+						$voterId = $this->_user['id'];
+						$comments = $this->request->data['comments_'.$awardId];
+			
+						// Check if this user has voted
+						$result = Vote::count(array(
+							'conditions' => array(
+								'round_id' => $roundId,
+								'award_id' => $awardId,
+								'voter_user_id' => $voterId
+							)));
+						if ($result > 0) {
+							FlashMessage::write("You've already voted for this round!");
+							break;
+						}
+						
+						if ($voterId == $voteeId) {
+							FlashMessage::write("You cannot vote for yourself!");
+							break;						
+						}
+			
+			
+						$vote = Vote::create();
+			
+						$vote->round_id = $roundId;
+						$vote->award_id = $awardId;
+						$vote->voter_user_id = $voterId;
+						$vote->votee_user_id = $voteeId;
+						$vote->comments = $comments;
+			
+						$success = $vote->save();
+			
+						if (!$success) {
+							FlashMessage::write('Error occurred whilst voting. Please try again.');
+							continue;
+						}
 					}
 				}
 		

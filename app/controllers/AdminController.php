@@ -277,6 +277,16 @@ class AdminController extends \lithium\action\Controller {
 
 				return compact('function', 'votes', 'users', 'round', 'stillToVote');
 				break;
+				
+			case 'comments':
+				$userId = (int)$this->request->params['args'][2];
+				
+				$user = User::first(array('conditions' => array('id' => $userId)));
+				
+				$votes = Vote::all(array('conditions' => array('votee_user_id' => $userId)));
+				
+				return compact('function', 'roundId', 'user', 'votes');
+				break;
 		}
 	}
 

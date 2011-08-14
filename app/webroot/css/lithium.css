@@ -383,3 +383,8 @@ table.table-votes thead tr .headerSortDown, table.table-votes thead tr .headerSo
 	background-color: #8dbdd8;
 }
 
+.vote_comments {
+	height: 80px;
+	width: 80%;
+}
+

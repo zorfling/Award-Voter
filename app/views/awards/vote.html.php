@@ -20,6 +20,11 @@
 					'id'	=> 'award_'.$award->award_id.'_user_'.$user->id,
 					'value'	=> $user->id)); ?>
 		<?php } ?>
+		<br />
+		<?= $this->form->field('comments_'.$award->award_id, array(
+					'label' => 'Comments',
+					'type'	=> 'textarea',
+					'class'	=>	'vote_comments')); ?>
 	</div>
 <?php } ?>
 </div>
