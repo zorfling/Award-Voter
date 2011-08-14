@@ -42,13 +42,18 @@ class UsersController extends \lithium\action\Controller {
 		$user = $user->First();
 
 		if ($this->request->data) {
-			// Filter should have done this but we'll do it here for now
-			$this->request->data['password'] = \lithium\util\String::hash($this->request->data['password']);
-			$success = $user->save($this->request->data);
-			if ($success) {
-				FlashMessage::write('Password updated!');
+			if ($this->request->data['password'] == $this->request->data['password_confirm']) {
+				// Filter should have done this but we'll do it here for now
+				$this->request->data['password'] = \lithium\util\String::hash($this->request->data['password']);
+				$success = $user->save($this->request->data);
+				if ($success) {
+					FlashMessage::write('Password updated!');
+				}
+				$this->redirect('awards::vote');
+			} else {
+				FlashMessage::write("Passwords don't match");
+				$this->redirect('users::password');
 			}
-			$this->redirect('awards::vote');
 		}
 	}
 
