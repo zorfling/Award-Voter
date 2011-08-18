@@ -22,7 +22,7 @@
 		<?php } ?>
 		<br />
 		<?= $this->form->field('comments_'.$award->award_id, array(
-					'label' => 'Comments',
+					'label' => 'Tell us why?',
 					'type'	=> 'textarea',
 					'class'	=>	'vote_comments')); ?>
 	</div>
