@@ -129,7 +129,7 @@ class AdminController extends \lithium\action\Controller {
 				$round = $data->first();
 
 				// Get users
-				$users = User::all(array('conditions' => array('is_admin' => false)));
+				$users = User::all(array('conditions' => array('is_admin' => false), 'order' => array('first_name', 'surname')));
 				$roundUsersRS = RoundUser::all(array('conditions' => array('round_id' => $roundId)));
 
 				// Get round users into the correct format
