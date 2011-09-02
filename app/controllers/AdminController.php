@@ -280,10 +280,11 @@ class AdminController extends \lithium\action\Controller {
 				
 			case 'comments':
 				$userId = (int)$this->request->params['args'][2];
+				$roundId = (int)$this->request->params['args'][1];
 				
 				$user = User::first(array('conditions' => array('id' => $userId)));
 				
-				$votes = Vote::all(array('conditions' => array('votee_user_id' => $userId)));
+				$votes = Vote::all(array('conditions' => array('votee_user_id' => $userId, 'round_id' => $roundId)));
 				
 				return compact('function', 'roundId', 'user', 'votes');
 				break;
