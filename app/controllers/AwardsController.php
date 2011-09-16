@@ -78,10 +78,10 @@ class AwardsController extends \lithium\action\Controller {
 						}
 						
 						// If voter or votee is not in the round, someone is playing with the post
-						if (!(in_array($voterId, $userIds) && in_array($voteeId, $userIds))) {
-							FlashMessage::write("Naughty naughty! Please don't hack me!");
-							break;
-						}
+//						if (!(in_array($voterId, $userIds) && in_array($voteeId, $userIds))) {
+//							FlashMessage::write("Naughty naughty! Please don't hack me!");
+//							break;
+//						}
 			
 						$vote = Vote::create();
 			
