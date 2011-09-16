@@ -41,6 +41,15 @@ class AwardsController extends \lithium\action\Controller {
 		
 		if ($roundId) {
 
+			// Get round users
+			$roundUsers = RoundUser::find('all', array('conditions' => array('round_id' => $roundId)));
+		
+			foreach ($roundUsers as $roundUser) {
+				if ($roundUser->user_id != $this->_user['id']) {
+					$userIds[] = $roundUser->user_id;
+				}
+			}
+
 			if ($this->request->data) {
 				foreach($this->request->data as $key => $value) {
 					// Make sure it's actually the vote
@@ -67,7 +76,12 @@ class AwardsController extends \lithium\action\Controller {
 							FlashMessage::write("You cannot vote for yourself!");
 							break;						
 						}
-			
+						
+						// If voter or votee is not in the round, someone is playing with the post
+						if (!(in_array($voterId, $userIds) && in_array($voteeId, $userIds))) {
+							FlashMessage::write("Naughty naughty! Please don't hack me!");
+							break;
+						}
 			
 						$vote = Vote::create();
 			
@@ -90,15 +104,7 @@ class AwardsController extends \lithium\action\Controller {
 					FlashMessage::write('Vote successful!');
 				}
 			}
-		
-			$roundUsers = RoundUser::find('all', array('conditions' => array('round_id' => $roundId)));
-		
-			foreach ($roundUsers as $roundUser) {
-				if ($roundUser->user_id != $this->_user['id']) {
-					$userIds[] = $roundUser->user_id;
-				}
-			}
-		
+			
 			$users = User::all(array('conditions' => array('is_admin' => 0, 'id' => $userIds), 'order' => array('first_name', 'surname')));
 			$awards = Award::all();
 		} else {
