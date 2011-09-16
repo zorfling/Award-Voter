@@ -52,7 +52,7 @@ class AwardsController extends \lithium\action\Controller {
 
 			if ($this->request->data) {
 				foreach($this->request->data as $key => $value) {
-					// Make sure it's actually the vote
+					// Make sure it's actually the vote 
 					if (strpos($key, 'award') !== false) {
 						
 						$awardId = substr($key, strpos($key, '_')+1);
